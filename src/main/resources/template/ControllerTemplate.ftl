@@ -10,8 +10,8 @@ import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.util.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.util.StringUtils;
@@ -63,9 +63,9 @@ public class ${className}Controller extends BaseController{
     }
 
 
-    @RequestMapping(value = "/doSave")
+    @RequestMapping(value = "/save")
     @ResponseBody
-    public JSONObject doSave(@Valid ${className}  ${lowerName}, BindingResult result){
+    public JSONObject save(@Valid ${className}  ${lowerName}, BindingResult result){
         if (${lowerName} == null) {
         return resonseError(BASIC_MESSAGE_MUST_INPUT);
         }
@@ -79,9 +79,24 @@ public class ${className}Controller extends BaseController{
         return resonseOk();
     }
 
-    @RequestMapping(value = "/doUpdate")
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET )
+    public String edit(@PathVariable String id){
+        if (StringUtils.isEmpty(id)) {
+            return resonseError(BASIC_MESSAGE_MUST_INPUT);
+        }
+
+        ${className} ${lowerName} = ${lowerName}Service.query${className}ById(id);
+
+        if(${lowerName}==null){
+            return  ERROR_PAGE;
+        }
+
+        return "${className}/edit";
+    }
+
+    @RequestMapping(value = "/update")
     @ResponseBody
-    public JSONObject doUpdate(@Valid ${className} ${lowerName},BindingResult result){
+    public JSONObject update(@Valid ${className} ${lowerName},BindingResult result){
         if (${lowerName} == null) {
             return resonseError(BASIC_MESSAGE_MUST_INPUT);
         }
@@ -95,9 +110,9 @@ public class ${className}Controller extends BaseController{
         return resonseOk();
     }
 
-    @RequestMapping("/doDeleteById")
+    @RequestMapping(value = "/delete/{id}" ,method = RequestMethod.GET)
     @ResponseBody
-    public JSONObject doDeleteById(String id){
+    public JSONObject deleteById(@PathVariable String id){
         if(StringUtils.isEmpty(id)){
             return resonseError(BASIC_MUST_INPUT_DELETE_ID_OR_IDS);
         }
@@ -111,9 +126,9 @@ public class ${className}Controller extends BaseController{
         return responseError();
     }
 
-    @RequestMapping("/doDeleteByIds")
+    @RequestMapping(value = "/deleteIds/{ids}}" ,method = RequestMethod.GET)
     @ResponseBody
-    public JSONObject doDeleteByIds(String ids){
+    public JSONObject deleteByIds(@PathVariable String ids){
         if(StringUtils.isEmpty(ids)){
             return resonseError(BASIC_MUST_INPUT_DELETE_ID_OR_IDS);
         }
