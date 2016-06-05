@@ -84,9 +84,6 @@ where 1=1
     <if test="orderByClause != null and orderByClause != ''" >
        order by  ${orderByClause}
     </if>
-    <if test="limitClause != null and limitClause != ''" >
-       ${limitClause}
-    </if>
 </select>
       
 </mapper>   

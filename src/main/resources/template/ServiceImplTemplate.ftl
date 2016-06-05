@@ -39,7 +39,7 @@ public class  ${className}ServiceImpl implements ${className}Service {
     }
 
     public Page query${className}ForPage(Criteria criteria) {
-        PageHelper.newPage(criteria.getCurrentPage(), criteria.getPageSize());
+        PageHelper.newPage(criteria);
         ${lowerName}Mapper.query${className}ForList(criteria);
         return PageHelper.endPage();
     }
