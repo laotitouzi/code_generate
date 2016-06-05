@@ -6,7 +6,7 @@ import ${bussPackage}.dao#if($!entityPackage).${entityPackage}#end.${className}M
 import ${bussPackage}.service#if($!entityPackage).${entityPackage}#end.${className}Service;
 import ${bussPackage}.entity.${className};
 import com.tshop.page.*;
-
+import java.util.List;
 /**
 * author: ${author}
 * createDate: ${createDate}
@@ -40,7 +40,7 @@ public class  ${className}ServiceImpl implements ${className}Service {
 
     public Page query${className}ForPage(Criteria criteria) {
         PageHelper.newPage(criteria.getCurrentPage(), criteria.getPageSize());
-        UserMapper.query${className}ByList(criteria);
+        ${lowerName}Mapper.query${className}ForList(criteria);
         return PageHelper.endPage();
     }
 
@@ -48,8 +48,8 @@ public class  ${className}ServiceImpl implements ${className}Service {
         return ${lowerName}Mapper.query${className}ByCount(criteria);
     }
 
-    public List query${className}ByList(Criteria criteria){
-        return ${lowerName}Mapper.query${className}ByList(criteria);
+    public List query${className}ForList(Criteria criteria){
+        return ${lowerName}Mapper.query${className}ForList(criteria);
     }
 
     public ${className} query${className}ById(Object id){

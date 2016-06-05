@@ -1,7 +1,7 @@
 package ${bussPackage}.service#if($!entityPackage).${entityPackage}#end;
-import com.base.service.BaseService;
 import ${bussPackage}.entity.${className};
-
+import com.tshop.page.*;
+import java.util.List;
 /**
 * author: ${author}
 * createDate: ${createDate}
@@ -9,7 +9,7 @@ import ${bussPackage}.entity.${className};
 
 public interface ${className}Service {
 
-    public int add${className}(${className} ${lowerName});
+    public void add${className}(${className} ${lowerName});
 
     public int update${className}(${className} ${lowerName});
 
@@ -21,7 +21,7 @@ public interface ${className}Service {
 
     public int query${className}ByCount(Criteria criteria);
 
-    public List query${className}ByList(Criteria criteria);
+    public List query${className}ForList(Criteria criteria);
 
     public ${className} query${className}ById(Object id);
 

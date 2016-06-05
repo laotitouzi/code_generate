@@ -48,11 +48,12 @@ public class CodeGenerateFactory
     String cPath=(controllerEntityPackage==null||"".equals(controllerEntityPackage))?"": controllerEntityPackage + "\\";
     
     String beanPath = "entity\\" + entityPath + className + ".java";
-    String mapperPath = "dao\\" + entityPath + className + "Dao.java";
+    String mapperPath = "dao\\" + entityPath + className + "Mapper.java";
     String servicePath = "service\\" + entityPath + className + "Service.java";
     String serviceImplPath = "service\\impl\\" + entityPath + className + "ServiceImpl.java";
-    String controllerPath = "controller\\" +cPath + className + "Controller.java";
-    String sqlMapperPath = "mapper\\" + entityPath + className + "Mapper.xml";
+    String controllerPath = "controller\\"  + className + "Controller.java";
+    String sqlMapperPath = "dao\\" + entityPath + className + "Mapper.xml";
+    String serviceTestPath = "test\\" + entityPath + className + "ServiceTest.java";
     String createDate = DateFormatUtils.format(new Date(),"yyyy-MM-dd");
     webPath = webPath + entityPath;
 
@@ -92,6 +93,7 @@ public class CodeGenerateFactory
     CommonPageParser.WriterPage(context, "ServiceImplTemplate.ftl", pckPath, serviceImplPath);
     CommonPageParser.WriterPage(context, "MapperTemplate.xml", pckPath, sqlMapperPath);
     CommonPageParser.WriterPage(context, "ControllerTemplate.ftl", pckPath, controllerPath);
+    CommonPageParser.WriterPage(context, "junit\\ServiceJunitTemplate.ftl", pckPath, serviceTestPath);
 
    // CommonPageParser.WriterPage(context, "jspTemplate.ftl", webPath, jspPath);
 

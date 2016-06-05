@@ -3,6 +3,9 @@ package ${bussPackage}.dao#if($!entityPackage).${entityPackage}#end;
 import org.springframework.stereotype.Service;
 import org.apache.ibatis.annotations.Param;
 import ${bussPackage}.entity.${className};
+import com.tshop.page.*;
+import java.util.List;
+import com.tshop.page.Criteria;
 
 /**
  * author: ${author}
@@ -24,7 +27,7 @@ public interface ${className}Mapper  {
 
     public int query${className}ByCount(Criteria criteria);
 
-    public List query${className}ByList(Criteria criteria);
+    public List query${className}ForList(Criteria criteria);
 
     public ${className} query${className}ById(@Param("id") Object id);
 

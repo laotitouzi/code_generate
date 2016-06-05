@@ -76,7 +76,7 @@ where 1=1
 </select>
       
 <!-- 查询${codeName}列表 -->
-<select id="query$!{className}ByList" resultMap="BaseResultMap"  parameterType="Object">
+<select id="query$!{className}ForList" resultMap="BaseResultMap"  parameterType="Object">
     select 
     <include refid="Base_Column_List"/>
     from ${tableName} 

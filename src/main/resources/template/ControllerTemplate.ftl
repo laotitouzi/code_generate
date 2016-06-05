@@ -1,12 +1,18 @@
-package ${bussPackage}.controller#if($!controllerEntityPackage).${controllerEntityPackage}#end;
+package ${bussPackage}.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+
 import org.apache.log4j.Logger;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.context.annotation.Scope;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.util.StringUtils;
 
@@ -25,7 +31,6 @@ import ${bussPackage}.service#if($!entityPackage).${entityPackage}#end.${classNa
 @Controller
 @Scope("prototype")
 @RequestMapping("/${lowerName}")
-
 public class ${className}Controller extends BaseController{
     
     @Autowired(required=false)
@@ -40,9 +45,9 @@ public class ${className}Controller extends BaseController{
      *  非分页查询，根据条件显示所有记录
      */
     @RequestMapping("/show")
-    public String show(HttpServletRequest request, HttpServletResponse response,,Criteria criteria) throws Exception{
+    public String show(HttpServletRequest request, HttpServletResponse response,Criteria criteria) throws Exception{
         //TODO
-        list  =  ${lowerName}Service.query${className}(criteria);
+        list  =  ${lowerName}Service.query${className}ForList(criteria);
         return "/${className}/show";
     }
 
@@ -60,9 +65,9 @@ public class ${className}Controller extends BaseController{
 
     @RequestMapping(value = "/doSave")
     @ResponseBody
-    public JSONObject doSave(@Valid ${className}  ${lowerName}, BindingResult result)){
+    public JSONObject doSave(@Valid ${className}  ${lowerName}, BindingResult result){
         if (${lowerName} == null) {
-        return resonseError(BADIC_MESSAGE_MUST_INPUT);
+        return resonseError(BASIC_MESSAGE_MUST_INPUT);
         }
 
         if (result.hasErrors()) {
@@ -76,9 +81,9 @@ public class ${className}Controller extends BaseController{
 
     @RequestMapping(value = "/doUpdate")
     @ResponseBody
-    public JSONObject doUpdate(@Valid ${className} ${lowerName},BindingResult result)){
+    public JSONObject doUpdate(@Valid ${className} ${lowerName},BindingResult result){
         if (${lowerName} == null) {
-            return resonseError(BADIC_MESSAGE_MUST_INPUT);
+            return resonseError(BASIC_MESSAGE_MUST_INPUT);
         }
 
         if (result.hasErrors()) {
@@ -93,7 +98,7 @@ public class ${className}Controller extends BaseController{
     @RequestMapping("/doDeleteById")
     @ResponseBody
     public JSONObject doDeleteById(String id){
-        if(.StringUtils.isEmpty(id)){
+        if(StringUtils.isEmpty(id)){
             return resonseError(BASIC_MUST_INPUT_DELETE_ID_OR_IDS);
         }
 
@@ -109,7 +114,7 @@ public class ${className}Controller extends BaseController{
     @RequestMapping("/doDeleteByIds")
     @ResponseBody
     public JSONObject doDeleteByIds(String ids){
-        if(.StringUtils.isEmpty(ids)){
+        if(StringUtils.isEmpty(ids)){
             return resonseError(BASIC_MUST_INPUT_DELETE_ID_OR_IDS);
         }
 

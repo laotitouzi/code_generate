@@ -1,4 +1,4 @@
-package cengle.service;
+package ${bussPackage}.service#if($!entityPackage).${entityPackage}#end;
 
 import java.util.List;
 
@@ -9,11 +9,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
-
-import ${bussPackage}.entity.${entityPackage}.${className};
-import ${bussPackage}.page.${entityPackage}.${className}Page;
-import ${bussPackage}.service.${entityPackage}.${className}Service;
-import ${bussPackage}.dao.${entityPackage}.${className}Dao;
+import com.tshop.page.*;
+import ${bussPackage}.entity$#if($!entityPackage).${entityPackage}#end.${className};
+import ${bussPackage}.service$#if($!entityPackage).${entityPackage}#end.${className}Service;
+import ${bussPackage}.dao$#if($!entityPackage).${entityPackage}#end.${className}Mapper;
 
 
 
@@ -25,21 +24,21 @@ import ${bussPackage}.dao.${entityPackage}.${className}Dao;
  * 在方法名上添加@Rollback(false)表示这个测试用例不需要回滚。
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations="classpath:spring-*.xml")
+@ContextConfiguration(locations = "classpath:application.xml")
 @TransactionConfiguration(defaultRollback = false)
 @Transactional
 public class ${className}ServiceTest {
     private static Object id;
     @Autowired
-    private ${className}Service<${className}> $!{lowerName}Service;
+    private ${className}Service $!{lowerName}Service;
     
 
     @Test
     public void testAdd(){
         try {
             ${className} $!{lowerName} = new ${className}();
-            $!{lowerName}Service.add($!{lowerName});
-            id = $!{lowerName}.getId();
+            $!{lowerName}Service.add${className}($!{lowerName});
+             id = $!{lowerName}.getId();
             System.out.println("-testAdd-----id---------"+id);
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -49,10 +48,10 @@ public class ${className}ServiceTest {
     @Test
     public void testList(){
         try {
-            ${className}Page $!{lowerName}Page = new ${className}Page();
-            List<${className}> $!{lowerName}s = $!{lowerName}Service.queryByList($!{lowerName}Page);
+              Criteria criteria = new Criteria();
+               List<${className}> $!{lowerName}s = $!{lowerName}Service.query${className}ForList(criteria);
             for(${className} e:$!{lowerName}s){
-                System.out.println(e.getName());
+                System.out.println(e.getId());
             }
             System.out.println("----testList----------");
         } catch (Exception e) {
@@ -63,10 +62,26 @@ public class ${className}ServiceTest {
     @Test
     public void testDel(){
         try {
-            $!{lowerName}Service.delete(id);
+            $!{lowerName}Service.delete${className}ById(id);
             System.out.println("---testDel-----------");
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void getPage(){
+        Criteria criteria = new Criteria();
+
+        Page p  = $!{lowerName}Service.query${className}ForPage(criteria);
+
+        System.out.println(p.getPageSize());
+
+        System.out.println(p.getTotalPage());
+
+        List<${className}> list = p.getList();
+        for (${className} $!{lowerName}:list) {
+            System.out.println($!{lowerName}.getId());
         }
     }
 }
